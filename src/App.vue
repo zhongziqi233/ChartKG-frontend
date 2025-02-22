@@ -4,7 +4,7 @@
       <el-row :style="{height: '15%'}">
         <el-col :span="24">
           <SimpleCard title="文件上传">
-           
+            <ImageUpload/>
           </SimpleCard>
         </el-col>
       </el-row>
@@ -42,7 +42,8 @@
 
 <script setup>
 /* eslint-disable no-unused-vars */
-import SimpleCard from "./components/SimpleCard.vue"
+import SimpleCard from "./components/SimpleCard.vue";
+import ImageUpload from "./components/ImageUpload.vue";
 </script>
 
 <style>
