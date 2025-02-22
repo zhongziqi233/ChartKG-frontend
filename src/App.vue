@@ -1,26 +1,65 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <el-row id="viewport">
+    <el-col :span="5">
+      <el-row :style="{height: '15%'}">
+        <el-col :span="24">
+          <SimpleCard title="文件上传">
+           
+          </SimpleCard>
+        </el-col>
+      </el-row>
+      <el-row  :style="{height: '85%'}">
+        <el-col :span="24">
+          <SimpleCard title="图表检索">
+
+          </SimpleCard>
+        </el-col>
+      </el-row>
+    </el-col>
+    <el-col :span="10">
+      <el-row :style="{height: '60%'}">
+        <el-col :span="24">
+          <SimpleCard title="检索结果">
+
+          </SimpleCard>
+        </el-col>
+      </el-row>
+      <el-row :style="{height: '40%'}">
+        <el-col :span="24">
+          <SimpleCard title="图表问答">
+
+          </SimpleCard>
+        </el-col>
+      </el-row>
+    </el-col>
+    <el-col :span="9">
+      <SimpleCard title="图谱展示">
+
+      </SimpleCard>
+    </el-col>
+  </el-row>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+<script setup>
+/* eslint-disable no-unused-vars */
+import SimpleCard from "./components/SimpleCard.vue"
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+</style>
+
+<style scoped>
+#viewport {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 </style>
