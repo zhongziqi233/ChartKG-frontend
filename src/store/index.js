@@ -1,13 +1,12 @@
 import Vuex from 'vuex';
-import actions from './actions';
 import getters from './getters';
-import mutations from './mutations';
+import searchResult from './modules/searchResult';
 
 const store = new Vuex.Store({
-  modules: {},
-  actions,
+  modules: {
+    searchResult
+  },
   getters,
-  mutations,
 })
 
 export default store;

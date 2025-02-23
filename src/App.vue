@@ -1,6 +1,6 @@
 <template>
   <el-row id="viewport">
-    <el-col :span="5">
+    <el-col class="outer-col" :span="5">
       <el-row :style="{height: '15%'}">
         <el-col :span="24">
           <SimpleCard title="文件上传">
@@ -16,11 +16,11 @@
         </el-col>
       </el-row>
     </el-col>
-    <el-col :span="10">
+    <el-col class="outer-col" :span="10">
       <el-row :style="{height: '60%'}">
-        <el-col :span="24">
+        <el-col :span="24" :style="{height: '100%'}">
           <SimpleCard title="检索结果">
-
+            <SearchResult/>
           </SimpleCard>
         </el-col>
       </el-row>
@@ -32,7 +32,7 @@
         </el-col>
       </el-row>
     </el-col>
-    <el-col :span="9">
+    <el-col class="outer-col" :span="9">
       <SimpleCard title="图谱展示">
 
       </SimpleCard>
@@ -43,7 +43,8 @@
 <script setup>
 /* eslint-disable no-unused-vars */
 import SimpleCard from "./components/SimpleCard.vue";
-import ImageUpload from "./components/ImageUpload.vue";
+import ImageUpload from "./components/imageUpload/ImageUpload.vue";
+import SearchResult from "./components/searchResult/SearchResult.vue";
 </script>
 
 <style>
@@ -62,5 +63,8 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+.outer-col {
+  height: 100%;
 }
 </style>
