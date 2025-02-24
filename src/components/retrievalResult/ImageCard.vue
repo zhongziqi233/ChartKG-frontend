@@ -22,7 +22,7 @@ const props = defineProps({
 <style scoped>
 .card-container {
   margin: 2.5px;
-  width: calc(25% - 7px);
+  width: calc(50% - 7px);
   height: 150;
   float: left;
 }

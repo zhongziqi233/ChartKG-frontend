@@ -22,8 +22,9 @@ const props = defineProps({
 </script>
 <style scoped>
 .card-title {
-  background-color: aliceblue;
+  background-color: rgb(248, 240, 255);
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  color: BlueViolet;
 }
 .card-title-text {
   font-weight: bolder;
@@ -35,7 +36,7 @@ const props = defineProps({
   height: calc(100% - 5px);
   margin: 2.5px;
   border-radius: 2.5px;
-  border: 1px aliceblue solid;
+  border: 1px var(--el-border-color) solid;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 .slot-content {
