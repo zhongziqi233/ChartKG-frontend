@@ -41,19 +41,6 @@ import { ref } from 'vue';
 
 import { Search } from '@element-plus/icons-vue';
 
-import api from '@/api/request.js'
-
-
-const test = () => {
-  api({
-    url: '/test',
-    method: 'get'
-  }).then((res) => {
-    alert('请求成功!');
-    console.log(res);
-  });
-}
-
 const input1 = ref("")
 const input2 = ref("")
 const input3 = ref("")
