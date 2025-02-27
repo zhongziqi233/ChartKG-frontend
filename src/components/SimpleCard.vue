@@ -12,7 +12,6 @@
 </template>
 <script setup>
 /* eslint-disable no-unused-vars,no-undef */
-
 const props = defineProps({
     title: {
         type: String,
@@ -22,13 +21,12 @@ const props = defineProps({
 </script>
 <style scoped>
 .card-title {
-  background-color: rgb(248, 240, 255);
+  background-color: rgb(235.9, 245.3, 255);
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-  color: BlueViolet;
+  color: #409EFF;
 }
 .card-title-text {
-  font-weight: bolder;
-  font-size: 20px;
+  font-size: 18px;
   margin: auto;
 }
 .card-container {

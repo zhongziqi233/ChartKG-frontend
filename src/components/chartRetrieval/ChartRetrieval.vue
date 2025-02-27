@@ -101,6 +101,6 @@ const retrievalStart = () => {
 }
 .el-button {
   font-size: 18px;
-  font-weight: bold;
+  font-weight: bolder;
 }
 </style>
