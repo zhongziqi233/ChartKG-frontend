@@ -37,8 +37,7 @@ onMounted(async () => {
   chartInstance = echarts.init(document.getElementById('chartDom'));
   const option = {
     title: {
-      text: 'Les Miserables',
-      subtext: 'Default layout',
+      text: 'Test title',
       top: 'bottom',
       left: 'right'
     },
@@ -52,7 +51,6 @@ onMounted(async () => {
     ],
     series: [
       {
-        name: 'Les Miserables',
         type: 'graph',
         layout: 'force',
         data: graph.value.nodes,

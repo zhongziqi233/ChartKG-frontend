@@ -23,7 +23,7 @@ const props = defineProps({
 .card-container {
   margin: 2.5px;
   width: calc(50% - 7px);
-  height: 150;
+  height: 240px;
   float: left;
 }
 

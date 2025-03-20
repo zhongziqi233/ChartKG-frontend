@@ -1,6 +1,6 @@
 <template>
   <el-col :span="24" :style="{height: '100%'}">
-    <el-tabs v-model="QAType" type="border-card" class="QA-tabs" stretch="true">
+    <el-tabs v-model="QAType" type="border-card" class="QA-tabs" :stretch="true">
       <!-- data comparison -->
       <el-tab-pane class="tab-content" label="数据比较" name="DC">
         <el-tag class="phrase-item phrase-item-tag" v-bind="tagType" :size="'large'" :effect="'light'">Question</el-tag>
@@ -22,7 +22,7 @@
         <el-input class="phrase-item" v-model="DCPhrase[8]" placeholder="">
           <template #append>{{ DCPhrase[9] }}</template>
         </el-input>
-        <el-button class="phrase-item" color="#626aef" plain @click="QAStart" :style="{width: '75%', marginTop: auto, margin: '30px 12.5% auto 12.5%'}">提问</el-button>
+        <el-button class="phrase-item" color="#626aef" plain @click="QAStart" :style="{width: '75%', marginTop: 'auto', margin: '30px 12.5% auto 12.5%'}">提问</el-button>
         <el-divider />
         <el-tag class="phrase-item phrase-item-tag" v-bind="tagType" :size="'large'" :effect="'light'">Answer</el-tag>
         <el-input class="phrase-item" v-model="DCAnswer" disabled :style="{cursor: 'default'}"></el-input>
@@ -41,7 +41,7 @@
             </el-select>
           </template>
         </el-input>
-        <el-button class="phrase-item" color="#626aef" plain @click="QAStart" :style="{width: '75%', marginTop: auto, margin: '104px 12.5% auto 12.5%'}">提问</el-button>
+        <el-button class="phrase-item" color="#626aef" plain @click="QAStart" :style="{width: '75%', marginTop: 'auto', margin: '104px 12.5% auto 12.5%'}">提问</el-button>
         <el-divider />
         <el-tag class="phrase-item phrase-item-tag" v-bind="tagType" :size="'large'" :effect="'light'">Answer</el-tag>
         <el-input class="phrase-item" v-model="VEAnswer" disabled :style="{cursor: 'default'}"></el-input>
@@ -154,6 +154,7 @@ const VIPhrase = ref({
   3: '',
   4: '?'
 })
+const VIAnswer = ref('');
 
 const templateChange1 = () => {
   if (VIPhrase.value[0] == "Which") { 

@@ -2,21 +2,21 @@
   <el-watermark :font="waterMarkConfig.font" :content="waterMarkConfig.content" :z-index="waterMarkConfig.zIndex" :gap="waterMarkConfig.gap">
     <el-row id="viewport">
       <el-col class="outer-col" :span="5">
-        <el-row :style="{height: '15%'}">
+        <!-- <el-row :style="{height: '7%'}">
           <el-col class="components-slot" :span="24">
             <SimpleCard title="文件上传">
               <ChartUpload/>
             </SimpleCard>
           </el-col>
-        </el-row>
-        <el-row  :style="{height: '35%'}">
+        </el-row> -->
+        <el-row  :style="{height: '42%'}">
           <el-col class="components-slot" :span="24">
             <SimpleCard title="图表检索">
               <ChartSearch/>
             </SimpleCard>
           </el-col>
         </el-row>
-        <el-row :style="{height: '50%'}">
+        <el-row :style="{height: '58%'}">
           <el-col class="components-slot" :span="24">
             <SimpleCard title="图表问答">
               <ChartQA/>

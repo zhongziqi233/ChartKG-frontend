@@ -35,6 +35,10 @@
 <script setup>
 /* eslint-disable no-unused-vars */
 import { ref } from "vue";
+import { toRaw } from '@vue/reactivity'
+import axios from "axios";
+import { useStore } from "vuex";
+const store = useStore();
 
 const barChecked = ref(true);
 const lineChecked = ref(true);
@@ -48,14 +52,14 @@ const insightsChecked = ref(false);
 const checkedInsights = ref([]);
 
 const insights = [
-  { lable: "OutstandingFirst", value: 'Outstanding First' },
-  { lable: "OutstandingSecond", value: 'Outstanding Second' },
-  { lable: "OutstandingLast", value: 'Outstanding Last' },
-  { lable: "上升趋势", value: 'Increase Trend' },
-  { lable: "下降趋势", value: 'Decrease Trend' },
-  { lable: "持平", value: 'Evenness' },
-  { lable: "正相关", value: 'Positive Correlation' },
-  { lable: "负相关", value: 'Negative Correlation' },
+  { lable: "OutstandingFirst", value: 'outstandingno1' },
+  { lable: "OutstandingSecond", value: 'outstandingno2' },
+  { lable: "OutstandingLast", value: 'outstandinglast' },
+  { lable: "上升趋势", value: 'trend increase ' },
+  { lable: "下降趋势", value: 'trend decrease' },
+  { lable: "持平", value: 'evenness' },
+  { lable: "正相关", value: 'positiveCorrelation' },
+  { lable: "负相关", value: 'negativeCorrelation' },
 ];
 
 const handleCheckAllChange = (value) => {
@@ -65,14 +69,28 @@ const handleCheckAllChange = (value) => {
   insightsChecked.value = false
 }
 const handleCheckedInsightsChange = (value) => {
-  console.log(value)
   const checkedCount = value.length
   insightsCheckAll.value = checkedCount === insights.length
   insightsChecked.value = checkedCount > 0 && checkedCount < insights.length
 }
 
 const retrievalStart = () => {
+  // 处理传参
+  const data = {
+    type: [],
+    entity: keywords.value.split(" "),
+    encode: [],
+    insight: toRaw(checkedInsights.value)
+  }
+  if (barChecked.value) { data.type.push("bar") }
+  if (lineChecked.value) { data.type.push("line") }
+  if (pieChecked.value) { data.type.push("pie") }
+  if (scatterChecked.value) { data.type.push("scatter") }
 
+  axios.post("api/chart_retrieval", data).then(response => {
+    store.dispatch('searchResult/updateSearchResult', response.data.data);
+    console.log(response)
+  })
 }
 </script>
 

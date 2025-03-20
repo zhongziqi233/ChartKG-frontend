@@ -1,6 +1,6 @@
 <template>
   <el-col id="search-result-container" :span="24" :style="{height: '100%'}">
-    <ImageCard v-for="item in searchResult" :key="item" title="测试标题" img="https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg" />
+    <ImageCard v-for="item in searchResult.data" :key="item" :title="item" :img="`/api/get_chart_image/${item.split(' ')[0]}/${item.split(' ')[1]}`" />
   </el-col>
 </template>
 
@@ -16,10 +16,13 @@ const store = useStore();
 const searchResult = ref(store.getters.searchResult);
 
 watch(
-  () => store.state.searchResult, 
-  (newVal, oldValue) => {
-    searchResult.value =newVal;
-  }
+  () => store.state.searchResult,
+  (newVal) => {
+    searchResult.value = newVal;
+    console.log('状态更新:', newVal);
+    console.log()
+  },
+  { deep: true }
 )
 </script>
 

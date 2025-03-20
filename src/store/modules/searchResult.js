@@ -1,14 +1,16 @@
-const state = [];
+const state = {
+  data: []
+};
 
 const mutations = {
-  CHANGE_SEARCHRESULT: (state, data) => {
-    state = data;
+  SET_SEARCHRESULT(state, value) {
+    state.data = value;
   }
 }
 
 const actions = {
-  CHANGE_SEARCHRESULT({ commit }, data) {
-    commit('CHANGE_ASSETTREE', data)
+  updateSearchResult({ commit }, data) {
+    commit('SET_SEARCHRESULT', data)
   }
 }
 
