@@ -19,8 +19,6 @@ watch(
   () => store.state.searchResult,
   (newVal) => {
     searchResult.value = newVal;
-    console.log('状态更新:', newVal);
-    console.log()
   },
   { deep: true }
 )

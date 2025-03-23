@@ -1,5 +1,9 @@
 <template>
-  <el-card class="card-container">
+  <el-card v-if="selected" class="card-container" @click="HandleClick">
+    <template #header>{{ title }}</template>
+    <img :src="img" style="width: 100%" />
+  </el-card>
+  <el-card v-else class="card-container" style="background-color: aqua;">
     <template #header>{{ title }}</template>
     <img :src="img" style="width: 100%" />
   </el-card>
@@ -7,6 +11,9 @@
 
 <script setup>
 /* eslint-disable no-unused-vars, no-undef */
+import { useStore } from 'vuex';
+import { ref, watch } from 'vue';
+const store = useStore();
 const props = defineProps({
     title: {
         type: String,
@@ -17,6 +24,19 @@ const props = defineProps({
       default: "../assets/image_fail.png",
     }
 })
+const selected = ref(props.title != store.getters.selectedChart.data)
+const HandleClick = () => {
+  store.dispatch("selectedChart/updateSelectedChart", props.title)
+}
+
+watch(
+  () => store.state.selectedChart,
+  (newVal) => {
+    selected.value = props.title != newVal.data
+  },
+  { deep: true }
+)
+
 </script>
 
 <style scoped>

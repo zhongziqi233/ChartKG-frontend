@@ -22,7 +22,7 @@
         <el-input class="phrase-item" v-model="DCPhrase[8]" placeholder="">
           <template #append>{{ DCPhrase[9] }}</template>
         </el-input>
-        <el-button class="phrase-item" color="#626aef" plain @click="QAStart" :style="{width: '75%', marginTop: 'auto', margin: '30px 12.5% auto 12.5%'}">提问</el-button>
+        <el-button class="phrase-item" color="#626aef" plain @click="QAStart('DC')" :style="{width: '75%', marginTop: 'auto', margin: '30px 12.5% auto 12.5%'}">提问</el-button>
         <el-divider />
         <el-tag class="phrase-item phrase-item-tag" v-bind="tagType" :size="'large'" :effect="'light'">Answer</el-tag>
         <el-input class="phrase-item" v-model="DCAnswer" disabled :style="{cursor: 'default'}"></el-input>
@@ -32,16 +32,13 @@
         <el-tag class="phrase-item phrase-item-tag" v-bind="tagType" :size="'large'" :effect="'light'" :style="{fontWeight: 'bolder'}">Question</el-tag>
         <el-input class="phrase-item" v-model="VEPhrase[1]" placeholder="">
           <template #prepend>{{ VEPhrase[0] }}</template>
-          <template #append>{{ VEPhrase[2] }}</template>
-        </el-input>
-        <el-input class="phrase-item input-with-select" v-model="VEPhrase[3]" placeholder="">
           <template #append>
-            <el-select v-model="VEPhrase[4]" :style="{width: '120px'}" placeholder="">
+            <el-select v-model="VEPhrase[2]" :style="{width: '120px'}" placeholder="">
               <el-option v-for="VEOption in VEOptions" :key="VEOption" :label="VEOption" :value="VEOption" />
             </el-select>
           </template>
         </el-input>
-        <el-button class="phrase-item" color="#626aef" plain @click="QAStart" :style="{width: '75%', marginTop: 'auto', margin: '104px 12.5% auto 12.5%'}">提问</el-button>
+        <el-button class="phrase-item" color="#626aef" plain @click="QAStart('VE')" :style="{width: '75%', marginTop: 'auto', margin: '104px 12.5% auto 12.5%'}">提问</el-button>
         <el-divider />
         <el-tag class="phrase-item phrase-item-tag" v-bind="tagType" :size="'large'" :effect="'light'">Answer</el-tag>
         <el-input class="phrase-item" v-model="VEAnswer" disabled :style="{cursor: 'default'}"></el-input>
@@ -93,7 +90,7 @@
             </template>
           </el-input>
         </div>
-        <el-button class="phrase-item" color="#626aef" plain @click="QAStart" :style="{width: '75%', margin: '104px 12.5% auto 12.5%'}">提问</el-button>
+        <el-button class="phrase-item" color="#626aef" plain @click="QAStart('VI')" :style="{width: '75%', margin: '104px 12.5% auto 12.5%'}">提问</el-button>
         <el-divider />
         <el-tag class="phrase-item phrase-item-tag" v-bind="tagType" :size="'large'" :effect="'light'">Answer</el-tag>
         <el-input class="phrase-item" v-model="VIAnswer" disabled :style="{cursor: 'default'}"></el-input>
@@ -104,8 +101,12 @@
 </template>
 
 <script setup>
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars, no-empty */
+import axios from 'axios';
+import { ElMessage } from 'element-plus';
 import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
+const store = useStore();
 
 const QAType = ref('DC')
 
@@ -122,29 +123,28 @@ const tagType = computed(() => {
   }
 })
 
-const DCOptions = ['more than', 'less than', 'equals'];
+const DCOptions = ['more than', 'less than', 'equal'];
 const DCPhrase = ref({
-  0: 'Is the', 1: '', 2: 'of',
+  0: 'Is the', 1: '', 2: 'in',
   3: '', 4: '',
-  5: 'the', 6: '', 7: 'of',
+  5: 'the', 6: '', 7: 'in',
   8: '', 9: '?',
 })
-const DCQuestion = ref('');
+var DCQuestion = undefined;
 const DCAnswer = ref('');
 
 const VEOptions = ['encode?', 'indicate?', 'represent?'];
 const VEPhrase = ref({
-  0: 'What does the', 1: '', 2: 'of the',
-  3: '', 4: ''
+  0: 'What does the', 1: '', 2: '',
 });
-const VEQuestion = ref('');
+var VEQuestion = undefined;
 const VEAnswer = ref('');
 
 const VIOptions = {
   0: ['Which', 'What is the'],
   1: ['trend', 'obvious visual insight'],
   2: ['of the', 'about'],
-  3: ['Outstanding First', 'Outstanding Second', 'Outstanding Last'],
+  3: ['OutstandingNo1', 'OutstandingNo2', 'OutstandingLast'],
 }
 
 const VIPhrase = ref({
@@ -154,6 +154,7 @@ const VIPhrase = ref({
   3: '',
   4: '?'
 })
+var VIQuestion = undefined;
 const VIAnswer = ref('');
 
 const templateChange1 = () => {
@@ -177,8 +178,34 @@ const templateChange2 = () => {
   }
 }
 
-const QAStart = () => {
-
+const QAStart = (type) => {
+  if (store.getters.selectedChart.data == "") {
+    ElMessage({ message: '请先选择一张用于问答的图表', type: 'error' })
+  }
+  else if (type == 'DC') {
+    const DCP = DCPhrase.value;
+    DCQuestion = `${DCP[0]} {${DCP[1]} ${DCP[2]} ${DCP[3]}} ${DCP[4]} {${DCP[6]} ${DCP[7]} ${DCP[8]}} ${DCP[9]}`;
+    const data = { qs: DCQuestion, chart: store.getters.selectedChart.data, type: 'DC' }
+    axios.post('/api/chart_QA', data).then(response => {
+      DCAnswer.value = response.data.data
+    })
+  } else if (type == 'VE') {
+    const VEP = VEPhrase.value;
+    VEQuestion = `${VEP[0]} {${VEP[1]}} ${VEP[2]}`;
+    const data = { qs: VEQuestion, chart: store.getters.selectedChart.data, type: 'VE' }
+    axios.post('/api/chart_QA', data).then(response => {
+      VEAnswer.value = response.data.data
+    })
+  } else if (type == 'VI') {
+    const VIP = VIPhrase.value;
+    VIQuestion = `${VIP[0]} ${VIP[1]} ${VIP[2]} {${VIP[3]}} ${VIP[4]}`;
+    const data = { qs: VIQuestion, chart: store.getters.selectedChart.data, type: 'VI' }
+    axios.post('/api/chart_QA', data).then(response => {
+      VIAnswer.value = response.data.data
+    })
+  } else {
+    console.error('未知的QA类型')
+  }
 }
 </script>
 

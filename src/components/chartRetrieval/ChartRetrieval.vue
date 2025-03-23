@@ -20,7 +20,7 @@
       <el-col class="item-content" :span="18">
         <el-checkbox v-model="insightsCheckAll" :indeterminate="insightsChecked" @change="handleCheckAllChange" label="视觉见解" />
         <el-checkbox-group v-model="checkedInsights" @change="handleCheckedInsightsChange">
-          <el-checkbox v-for="insight in insights" :key="insight.value" :label="insight.lable" :value="insight.value"/>
+          <el-checkbox v-for="insight in insights" :key="insight.value" :label="insight.label" :value="insight.value"/>
         </el-checkbox-group>
       </el-col>
     </el-row>
@@ -52,14 +52,17 @@ const insightsChecked = ref(false);
 const checkedInsights = ref([]);
 
 const insights = [
-  { lable: "OutstandingFirst", value: 'outstandingno1' },
-  { lable: "OutstandingSecond", value: 'outstandingno2' },
-  { lable: "OutstandingLast", value: 'outstandinglast' },
-  { lable: "上升趋势", value: 'trend increase ' },
-  { lable: "下降趋势", value: 'trend decrease' },
-  { lable: "持平", value: 'evenness' },
-  { lable: "正相关", value: 'positiveCorrelation' },
-  { lable: "负相关", value: 'negativeCorrelation' },
+  { label: "OutstandingFirst", value: 'outstandingno1' },
+  { label: "OutstandingSecond", value: 'outstandingno2' },
+  { label: "OutstandingLast", value: 'outstandinglast' },
+  { label: "上升趋势", value: 'trend increase' },
+  { label: "下降趋势", value: 'trend decrease' },
+  { label: "持平", value: 'evenness' },
+  { label: "正相关", value: 'positiveCorrelation' },
+  { label: "负相关", value: 'negativeCorrelation' },
+  { label: "数据特征", value: 'attribution' },
+  { label: "转折点", value: 'changePoint'},
+  { label: "离群点", value: 'outlier'}
 ];
 
 const handleCheckAllChange = (value) => {
@@ -78,7 +81,7 @@ const retrievalStart = () => {
   // 处理传参
   const data = {
     type: [],
-    entity: keywords.value.split(" "),
+    entity: keywords.value.split(" ").filter(word => word !== ""),
     encode: [],
     insight: toRaw(checkedInsights.value)
   }
@@ -86,10 +89,9 @@ const retrievalStart = () => {
   if (lineChecked.value) { data.type.push("line") }
   if (pieChecked.value) { data.type.push("pie") }
   if (scatterChecked.value) { data.type.push("scatter") }
-
+  console.log(data)
   axios.post("api/chart_retrieval", data).then(response => {
     store.dispatch('searchResult/updateSearchResult', response.data.data);
-    console.log(response)
   })
 }
 </script>

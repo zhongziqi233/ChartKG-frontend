@@ -54,7 +54,7 @@ import ChartQA from "./components/chartQA/ChartQA.vue";
 import ChartKG from "./components/chartKG/ChartKG.vue";
 
 const waterMarkConfig = reactive({
-  content: ['', '赵正卿', ''],
+  content: ['', '210110900641', ''],
   font: {
     color: 'rgba(0, 0, 0, .1)',
     fontSize: 30,
